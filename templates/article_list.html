@@ -2,19 +2,50 @@
 {% block content %}
     {% if articles %}
         {% for article in (articles_page.object_list if articles_page else articles) %}
-            <article>
-                <h2><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h2>
-                {% if DISPLAY_ARTICLE_INFO_ON_INDEX %}
-                    <div class="well well-sm">
-                        {% include "includes/article_info.html" %}
-                    </div>
+            {% if DISPLAY_ARTICLE_INFO_ON_INDEX %}
+                {% if loop.first %}
+                    <article>
+                        <h2><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h2>
+                        {% if DISPLAY_ARTICLE_INFO_ON_INDEX %}
+                            <div class="well well-sm">
+                                {% include "includes/article_info.html" %}
+                            </div>
+                        {% endif %}
+                        <div class="summary">{{ article.content }}
+                            {% include 'includes/comment_count.html' %}
+                        </div>
+                    </article>
+                    <hr/>
+                {% else %}
+                    <article>
+                        <h2><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h2>
+                        {% if DISPLAY_ARTICLE_INFO_ON_INDEX %}
+                            <div class="well well-sm">
+                                {% include "includes/article_info.html" %}
+                            </div>
+                        {% endif %}
+                        <div class="summary">{{ article.summary }}
+                            {% include 'includes/comment_count.html' %}
+                            <a class="btn btn-default btn-xs" href="{{ SITEURL }}/{{ article.url }}">more ...</a>
+                        </div>
+                    </article>
+                    <hr/>
                 {% endif %}
-                <div class="summary">{{ article.summary }}
-                    {% include 'includes/comment_count.html' %}
-                    <a class="btn btn-default btn-xs" href="{{ SITEURL }}/{{ article.url }}">more ...</a>
-                </div>
-            </article>
-            <hr/>
+            {% else %}
+                <article>
+                    <h2><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h2>
+                    {% if DISPLAY_ARTICLE_INFO_ON_INDEX %}
+                        <div class="well well-sm">
+                            {% include "includes/article_info.html" %}
+                        </div>
+                    {% endif %}
+                    <div class="summary">{{ article.summary }}
+                        {% include 'includes/comment_count.html' %}
+                        <a class="btn btn-default btn-xs" href="{{ SITEURL }}/{{ article.url }}">more ...</a>
+                    </div>
+                </article>
+                <hr/>
+            {% endif %}
         {% endfor %}
     {% endif %}
 
