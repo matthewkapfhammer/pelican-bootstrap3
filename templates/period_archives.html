@@ -11,21 +11,13 @@
 
 {% block content %}
     <section id="content">
-        <h1>Archives for {{ SITENAME }}</h1>
+        <h1>Archives for {{ period | reverse | join(' ') }}</h1>
 
         <dl>
             {% for article in dates %}
-                {% if loop.first %}
-                    <h3>{{ article.date|strftime('%Y') }}</h3>
-                    {% set year = article.date|strftime('%Y') %}
-                {% endif %}
-                {% if year != article.date|strftime('%Y') %}
-                    <h3>{{ article.date|strftime('%Y') }}</h3>
-                    {% set year = article.date|strftime('%Y') %}
-                {% endif %}
                 <dt>{{ article.locale_date }}</dt>
                 <dd><a href='{{ SITEURL }}/{{ article.url }}'>{{ article.title }}</a></dd>
             {% endfor %}
         </dl>
     </section>
-{% endblock %}
+{% endblock %}a
